@@ -18,7 +18,7 @@ const photoDatabase = [
     rotation: -1.6,
   },
   {
-    title: "miku's gamer run",
+    title: "miku's gamer supply run",
     imageUrl: "./images/4.jpg",
     description: "Nendoroid Miku Nakano in the Rolife Energy Supply Store.",
     rotation: 2.1,
