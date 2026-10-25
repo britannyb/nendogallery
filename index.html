@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nendography Gallery</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" type="image/png" href="./images/favicon.png" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="flex flex-col min-h-screen relative">
+    <div class="grid-background"></div>
+    <div
+      class="z-10 w-full max-w-6xl mx-auto px-4 sm:px-8 py-10 sm:py-14 flex flex-col items-center min-h-screen"
+    >
+      <header
+        class="w-full max-w-3xl mb-10 sm:mb-14 text-center flex flex-col items-center"
+      >
+        <h1
+          class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-3 drop-shadow-sm uppercase"
+        >
+          Nendography Gallery
+        </h1>
+
+        <p
+          class="text-xs sm:text-sm text-teal-100 font-normal leading-relaxed max-w-lg mx-auto"
+        >
+          A curated collection of Nendoroid photography by me. <br />
+          Click any photo to view.
+        </p>
+      </header>
+
+      <main class="w-full">
+        <div
+          id="galleryContainer"
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 w-full"
+        ></div>
+      </main>
+    </div>
+
+    <div
+      id="photoModal"
+      class="fixed inset-0 hidden items-center justify-center p-4 sm:p-6 bg-[#0B1E24]/90 backdrop-blur-md transition-opacity duration-300 opacity-0"
+      style="z-index: 9999"
+    >
+      <div class="absolute inset-0 cursor-pointer" onclick="closeModal()"></div>
+
+      <button
+        onclick="closeModal()"
+        class="absolute top-4 right-4 sm:top-6 sm:right-6 z-50 w-10 h-10 rounded-none bg-[#132B33]/90 border border-teal-600/60 text-teal-200 hover:text-white hover:border-teal-300 flex items-center justify-center transition shadow-xl backdrop-blur-md cursor-pointer"
+      >
+        <i class="fa-solid fa-xmark text-base"></i>
+      </button>
+
+      <button
+        onclick="navigateModal(-1)"
+        class="absolute left-3 sm:left-8 top-1/2 -translate-y-1/2 z-50 w-10 h-10 sm:w-12 sm:h-12 rounded-none bg-[#132B33]/90 border border-teal-600/60 text-teal-200 hover:text-white hover:border-teal-300 flex items-center justify-center transition shadow-2xl backdrop-blur-md cursor-pointer"
+      >
+        <i class="fa-solid fa-chevron-left text-sm"></i>
+      </button>
+      <button
+        onclick="navigateModal(1)"
+        class="absolute right-3 sm:right-8 top-1/2 -translate-y-1/2 z-50 w-10 h-10 sm:w-12 sm:h-12 rounded-none bg-[#132B33]/90 border border-teal-600/60 text-teal-200 hover:text-white hover:border-teal-300 flex items-center justify-center transition shadow-2xl backdrop-blur-md cursor-pointer"
+      >
+        <i class="fa-solid fa-chevron-right text-sm"></i>
+      </button>
+
+      <div
+        class="perspective-container relative w-full max-w-[400px] sm:max-w-[560px] md:max-w-[620px] h-[320px] sm:h-[560px] md:h-[600px] z-20"
+      >
+        <div id="modalTiltWrapper" class="tilt-wrapper w-full h-full">
+          <div
+            id="modalFlipCard"
+            class="flip-card-inner w-full h-full shadow-2xl"
+          >
+            <div
+              class="card-face card-front bg-white p-4 sm:p-5 flex flex-col justify-between shadow-2xl border border-slate-200"
+            >
+              <div
+                id="magnifierFrame"
+                class="relative w-full h-[380px] sm:h-[430px] md:h-[470px] bg-slate-100 rounded-none overflow-hidden shadow-inner border border-slate-200 cursor-crosshair group"
+              >
+                <img
+                  id="modalImgFront"
+                  src=""
+                  alt=""
+                  class="w-full h-full object-cover"
+                />
+
+                <div id="magnifierLens" class="magnifier-lens"></div>
+
+                <div
+                  class="absolute bottom-2.5 right-2.5 px-2 py-1 rounded-none bg-[#132B33]/85 text-teal-200 text-[10px] tracking-wider opacity-90 pointer-events-none backdrop-blur-sm border border-teal-600/50"
+                >
+                  <i
+                    class="fa-solid fa-magnifying-glass text-[9px] mr-1 text-teal-300"
+                  ></i>
+                  HOVER TO MAGNIFY
+                </div>
+              </div>
+
+              <div class="pt-2.5 pb-0.5 flex items-center justify-between">
+                <div class="sm:flex items-center gap-2.5">
+                  <h2
+                    id="modalTitleFront"
+                    class="text-sm sm:text-base text-slate-900 tracking-tight truncate heading-font"
+                  >
+                    Caption
+                  </h2>
+                  <button
+                    type="button"
+                    id="toggleMagnifierBtn"
+                    onclick="toggleMagnifierMode(event)"
+                    class="px-2 py-0.5 rounded-none bg-teal-50 hover:bg-teal-100 text-teal-800 text-[11px] transition flex items-center gap-1 border border-teal-300"
+                  >
+                    <i
+                      id="magnifierIcon"
+                      class="fa-solid fa-magnifying-glass text-teal-600 text-[10px]"
+                    ></i>
+                    <span id="magnifierStatusText">Zoom</span>
+                  </button>
+                </div>
+
+                <button
+                  type="button"
+                  class="px-3 py-1.5 rounded-none bg-[#16323B] hover:bg-[#1C3E4A] text-teal-200 hover:text-white text-xs transition flex items-center gap-1.5 shadow-sm cursor-pointer border border-teal-600/60"
+                  onclick="toggleFlip(event)"
+                >
+                  <span>DETAILS</span>
+                  <i class="fa-solid fa-rotate text-[11px] text-teal-300"></i>
+                </button>
+              </div>
+            </div>
+
+            <div
+              class="card-face card-back bg-white p-6 sm:p-8 flex flex-col justify-between shadow-2xl border border-slate-200"
+              onclick="toggleFlip(event)"
+            >
+              <div
+                class="flex flex-col h-full justify-between cursor-default"
+                onclick="event.stopPropagation()"
+              >
+                <div>
+                  <div
+                    class="flex items-center justify-end pb-3 mb-4 border-b border-slate-100"
+                  >
+                    <span
+                      id="modalCounter"
+                      class="text-xs font-semibold text-teal-700"
+                    >
+                      01 / 06
+                    </span>
+                  </div>
+
+                  <h2
+                    id="modalTitleBack"
+                    class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight mb-4 heading-font"
+                  >
+                    Caption
+                  </h2>
+
+                  <p
+                    id="modalDescBack"
+                    class="text-xs sm:text-sm text-slate-600 leading-relaxed modal-scroll max-h-[300px] sm:max-h-[340px] overflow-y-auto pr-2"
+                  >
+                    Detailed information regarding this photo asset.
+                  </p>
+                </div>
+                <div
+                  class="pt-4 border-t border-slate-100 flex items-center justify-between"
+                >
+                  <span class="text-[11px] font-medium text-teal-800"
+                    >SPACE TO FLIP</span
+                  >
+                  <button
+                    type="button"
+                    class="px-4 py-2 rounded-none bg-[#16323B] hover:bg-[#1C3E4A] text-teal-200 hover:text-white text-xs transition flex items-center gap-2 shadow-sm cursor-pointer border border-teal-600/60"
+                    onclick="toggleFlip(event)"
+                  >
+                    <i class="fa-solid fa-arrow-left text-xs text-teal-300"></i>
+                    <span>FLIP</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

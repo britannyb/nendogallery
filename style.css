@@ -1,0 +1,141 @@
+body {
+  background-color: #16323b;
+  min-height: 100vh;
+  color: #f8fafc;
+  font-family: "Outfit", sans-serif;
+  user-select: none;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+.heading-font {
+  font-family: "Outfit", sans-serif;
+  letter-spacing: 0.05em;
+}
+
+.grid-background {
+  position: fixed;
+  inset: 0;
+  background-size:
+    36px 36px,
+    36px 36px;
+  background-image:
+    linear-gradient(to right, rgba(0, 245, 206, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 245, 206, 0.1) 1px, transparent 1px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.vignette {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at 50% 30%,
+      rgba(0, 245, 206, 0.15) 0%,
+      transparent 65%
+    ),
+    radial-gradient(
+      circle at center,
+      transparent 40%,
+      rgba(15, 36, 43, 0.75) 100%
+    );
+  pointer-events: none;
+  z-index: 2;
+}
+
+#particlesCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.polaroid-card {
+  background: #ffffff;
+  border-radius: 0px !important;
+  transition:
+    transform 0.35s cubic-bezier(0.165, 0.84, 0.44, 1),
+    box-shadow 0.35s ease;
+  box-shadow: 0 14px 28px -6px rgba(0, 0, 0, 0.55);
+}
+
+.polaroid-card:hover {
+  transform: translateY(-8px) scale(1.025) rotate(0deg) !important;
+  box-shadow:
+    0 22px 42px -8px rgba(0, 0, 0, 0.75),
+    0 0 22px rgba(0, 245, 206, 0.35);
+  z-index: 20;
+}
+
+.main-photo-frame {
+  aspect-ratio: 1 / 1;
+}
+
+.perspective-container {
+  perspective: 1400px;
+}
+
+.tilt-wrapper {
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transition: transform 0.15s ease-out;
+}
+
+.flip-card-inner {
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transition: transform 0.65s cubic-bezier(0.4, 0.2, 0.2, 1);
+  position: relative;
+}
+
+.flip-card-inner.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  position: absolute;
+  inset: 0;
+  border-radius: 0px !important;
+}
+
+.card-front {
+  z-index: 2;
+  transform: rotateY(0deg);
+}
+
+.card-back {
+  transform: rotateY(180deg);
+  background-color: #ffffff;
+  color: #0f172a;
+}
+
+.magnifier-lens {
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 3px solid rgba(0, 245, 206, 0.9);
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.5),
+    inset 0 0 15px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+  display: none;
+  background-repeat: no-repeat;
+  z-index: 30;
+  transform: translate(-50%, -50%);
+}
+
+.modal-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+.modal-scroll::-webkit-scrollbar-thumb {
+  background: rgba(20, 184, 166, 0.4);
+  border-radius: 4px;
+}
