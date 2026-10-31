@@ -32,7 +32,7 @@ const photoDatabase = [
   {
     title: "rapunzel's dream",
     imageUrl: "./images/6.jpg",
-    description: "Nendoroid Rapunzel in the Rolife Fascinating Book Store",
+    description: "Nendoroid Rapunzel in the Rolife Fascinating Book Store.",
     rotation: 1.4,
   },
 ];
